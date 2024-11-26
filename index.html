@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>任务管理器</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="task-manager">
+        <div class="header">
+            <h1>我的任务清单</h1>
+            <div class="header-controls">
+                <div class="import-export">
+                    <button onclick="exportTasks()" class="export-btn">导出任务</button>
+                    <label class="import-btn">
+                        导入任务
+                        <input type="file" accept=".json" onchange="importTasks(event)" style="display: none;">
+                    </label>
+                </div>
+                <button id="showFormBtn" class="add-btn">+ 新建任务</button>
+            </div>
+        </div>
+
+        <div class="sort-buttons">
+            <button data-sort="startTime" onclick="sortTasks('startTime')">按开始时间</button>
+            <button data-sort="endTime" onclick="sortTasks('endTime')">按结束时间</button>
+            <button data-sort="urgency" onclick="sortTasks('urgency')">按紧急程度</button>
+            <button data-sort="completion" onclick="sortTasks('completion')">按完成状态</button>
+        </div>
+
+        <div class="view-controls">
+            <button onclick="toggleView('grid')" class="view-btn active" data-view="grid">
+                📱 网格视图
+            </button>
+            <button onclick="toggleView('list')" class="view-btn" data-view="list">
+                📝 列表视图
+            </button>
+        </div>
+
+        <div id="taskList" class="task-list">
+            <!-- 任务将通过 JavaScript 动态添加到这里 -->
+        </div>
+        
+        <div id="taskFormModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>创建新任务</h2>
+                <form id="taskForm">
+                    <input
+                        type="text"
+                        id="taskName"
+                        placeholder="任务名称"
+                        required
+                    />
+                    <input
+                        type="datetime-local"
+                        id="startTime"
+                        required
+                    />
+                    <input
+                        type="datetime-local"
+                        id="deadline"
+                        required
+                    />
+                    <div class="color-picker">
+                        <label>任务标记颜色</label>
+                        <input
+                            type="color"
+                            id="taskColor"
+                            value="#4A90E2"
+                        />
+                    </div>
+                    <div class="urgency-picker">
+                        <label>紧急程度 (1-5)</label>
+                        <select id="urgencyLevel">
+                            <option value="1">⭐</option>
+                            <option value="2">⭐⭐</option>
+                            <option value="3">⭐⭐⭐</option>
+                            <option value="4">⭐⭐⭐⭐</option>
+                            <option value="5">⭐⭐⭐⭐⭐</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="submit-btn">创建任务</button>
+                </form>
+            </div>
+        </div>
+
+        <div id="editTaskModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>编辑任务</h2>
+                <form id="editTaskForm">
+                    <input
+                        type="text"
+                        id="editTaskName"
+                        placeholder="任务名称"
+                        required
+                    />
+                    <input
+                        type="datetime-local"
+                        id="editStartTime"
+                        required
+                    />
+                    <input
+                        type="datetime-local"
+                        id="editDeadline"
+                        required
+                    />
+                    <div class="color-picker">
+                        <label>任务标记颜色</label>
+                        <input
+                            type="color"
+                            id="editColor"
+                            value="#4A90E2"
+                        />
+                    </div>
+                    <div class="urgency-picker">
+                        <label>紧急程度 (1-5)</label>
+                        <select id="editUrgencyLevel">
+                            <option value="1">⭐</option>
+                            <option value="2">⭐⭐</option>
+                            <option value="3">⭐⭐⭐</option>
+                            <option value="4">⭐⭐⭐⭐</option>
+                            <option value="5">⭐⭐⭐⭐⭐</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="submit-btn">更新任务</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <button class="dark-mode-toggle" onclick="toggleDarkMode()">
+        🌓
+    </button>
+    <script src="script.js"></script>
+</body>
+</html> 
